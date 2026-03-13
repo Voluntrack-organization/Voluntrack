@@ -1,4 +1,5 @@
 ---
+name: ui
 description: Reference point for all UI changes — design tokens, components, typography, color system, and layout patterns in Voluntrack.
 ---
 

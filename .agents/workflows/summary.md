@@ -1,4 +1,5 @@
 ---
+name: summary
 description: reduce token usage by summarizing conversation progress into Knowledge Items
 ---
 

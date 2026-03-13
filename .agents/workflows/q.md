@@ -1,4 +1,5 @@
 ---
+name: q
 description: Pure conversation mode. Acts as a thought-partner without executing code or creating plans.
 ---
 
