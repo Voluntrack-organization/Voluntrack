@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Navigation } from "@/components/navigation"
+import { FeedMap } from "@/components/feed-map"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -50,6 +51,8 @@ export default function FeedPage() {
               Volunteer activity and updates from your community
             </p>
           </div>
+
+          <FeedMap />
 
           {/* Achievement posts */}
           {achievementPosts.length === 0 && (
