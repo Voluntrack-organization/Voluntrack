@@ -28,6 +28,7 @@ export interface Opportunity {
   skills: string[];
   featured: boolean;
   image: string;
+  orgId: string;
 }
 
 export const ITEMS_PER_PAGE = 9; // Number of items to fetch per chunk

@@ -9,8 +9,7 @@ import {
     where,
     orderBy,
     deleteDoc,
-    serverTimestamp,
-    increment
+    serverTimestamp
 } from "firebase/firestore";
 import { db } from "./config";
 import { Opportunity } from "./opportunities";
@@ -31,6 +30,7 @@ export interface UserApplication {
     id: string;
     userId: string;
     opportunityId: string;
+    orgId: string;
     status: "pending" | "approved" | "completed" | "denied";
     appliedDate: string; // ISO
     // Snapshot of opportunity details at time of application for fast rendering
@@ -176,6 +176,7 @@ export async function applyToOpportunity(userId: string, opportunity: Opportunit
         const appData: Omit<UserApplication, "id"> = {
             userId,
             opportunityId: opportunity.id,
+            orgId: opportunity.orgId,
             status: "pending",
             appliedDate: new Date().toISOString(),
             title: opportunity.title,
@@ -202,48 +203,23 @@ export async function applyToOpportunity(userId: string, opportunity: Opportunit
 }
 
 /**
- * Update application status (Mock for demo/internal use)
- * In a real app, this would be triggered by an admin or organization.
+ * Update application status via secure server-side API route.
+ * The API enforces ownership and valid state transitions.
  */
 export async function updateApplicationStatus(
     userId: string,
     opportunityId: string,
     status: "approved" | "completed" | "denied"
 ): Promise<void> {
-    try {
-        const appRef = doc(db, "user_applications", `${userId}_${opportunityId}`);
-        const appDoc = await getDoc(appRef);
-
-        if (!appDoc.exists()) throw new Error("Application not found.");
-
-        const oldStatus = appDoc.data().status;
-        await updateDoc(appRef, { status, updatedAt: serverTimestamp() });
-
-        // If completed, increment student hours and check for badges in student_profiles
-        if (status === "completed" && oldStatus !== "completed") {
-            const profileRef = doc(db, "student_profiles", userId);
-            const profileDoc = await getDoc(profileRef);
-            const currentHours = profileDoc.data()?.hoursCompleted || 0;
-            const currentBadges = profileDoc.data()?.badges || [];
-            const hoursToAdd = appDoc.data().hours || 0;
-            const newTotalHours = currentHours + hoursToAdd;
-
-            const newBadges = [...currentBadges];
-            BADGE_MILESTONES.forEach(milestone => {
-                if (newTotalHours >= milestone.hours && !newBadges.includes(milestone.id)) {
-                    newBadges.push(milestone.id);
-                }
-            });
-
-            await updateDoc(profileRef, {
-                hoursCompleted: newTotalHours,
-                badges: newBadges,
-                updatedAt: serverTimestamp()
-            });
-        }
-    } catch (error) {
-        console.error("Error updating application status:", error);
-        throw error;
+    const applicationId = `${userId}_${opportunityId}`;
+    const response = await fetch(`/api/applications/${applicationId}/status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+    });
+    if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error ?? `Failed to update application status (${response.status})`);
     }
 }
 
