@@ -39,11 +39,14 @@ import {
     Flag,
     Download,
     Plus,
+    Zap,
 } from "lucide-react"
 import {
     getUserApplications,
     getUserSaved,
     updateApplicationStatus,
+    unsaveOpportunity,
+    applyToOpportunity,
     UserApplication,
     SavedOpportunity
 } from "@/lib/firebase/dashboard"
@@ -90,6 +93,8 @@ export default function ApplicationsPage() {
     const [savedExpanded, setSavedExpanded] = useState(false)
     const [applications, setApplications] = useState<UserApplication[]>([])
     const [savedOpps, setSavedOpps] = useState<SavedOpportunity[]>([])
+    const [appliedIds, setAppliedIds] = useState<Set<string>>(new Set())
+    const [actionLoading, setActionLoading] = useState<string | null>(null)
     const [dataLoading, setDataLoading] = useState(true)
     const [selectedApplication, setSelectedApplication] = useState<UserApplication | null>(null)
     const [selectedSaved, setSelectedSaved] = useState<SavedOpportunity | null>(null)
@@ -111,6 +116,7 @@ export default function ApplicationsPage() {
                 getUserSaved(user.uid)
             ])
             setApplications(userApps)
+            setAppliedIds(new Set(userApps.map(a => a.opportunityId)))
             setSavedOpps(userSaved)
         } catch (error) {
             console.error("Error fetching applications data:", error)
@@ -146,6 +152,35 @@ export default function ApplicationsPage() {
             toast.error("Failed to generate PDF.")
         } finally {
             setIsGeneratingPDF(false)
+        }
+    }
+
+    const handleUnsave = async (opp: SavedOpportunity) => {
+        if (!user?.uid) return
+        setActionLoading(`unsave-${opp.opportunityId}`)
+        try {
+            await unsaveOpportunity(user.uid, opp.opportunityId)
+            setSavedOpps(prev => prev.filter(s => s.opportunityId !== opp.opportunityId))
+            setSelectedSaved(null)
+            toast.success("Removed from saved list")
+        } catch {
+            toast.error("Failed to remove from saved list.")
+        } finally {
+            setActionLoading(null)
+        }
+    }
+
+    const handleApplyFromSaved = async (opp: SavedOpportunity) => {
+        if (!user?.uid || appliedIds.has(opp.opportunityId)) return
+        setActionLoading(`apply-${opp.opportunityId}`)
+        try {
+            await applyToOpportunity(user.uid, opp as any)
+            setAppliedIds(prev => new Set([...Array.from(prev), opp.opportunityId]))
+            toast.success("Application submitted successfully!")
+        } catch (err: any) {
+            toast.error(err.message || "Failed to apply.")
+        } finally {
+            setActionLoading(null)
         }
     }
 
@@ -1044,14 +1079,14 @@ export default function ApplicationsPage() {
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Modal Header with Image */}
-                        <div className="relative h-48">
-                            <Image
+                        <div className="relative h-64">
+                            <img
                                 src={selectedSaved.image}
                                 alt={selectedSaved.title}
-                                fill
-                                className="object-cover"
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => { (e.target as HTMLImageElement).src = '/icon.svg' }}
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
+                            <div className={`absolute inset-0 bg-gradient-to-t ${categoryColors[selectedSaved.category]?.heroGradient || 'from-slate-900/80 to-transparent'}`} />
                             <button
                                 onClick={() => setSelectedSaved(null)}
                                 className="absolute top-4 right-4 w-10 h-10 bg-white/90 hover:bg-white backdrop-blur-sm rounded-full flex items-center justify-center transition-colors shadow-lg"
@@ -1143,15 +1178,28 @@ export default function ApplicationsPage() {
 
                             {/* Action Buttons */}
                             <div className="flex gap-3">
-                                <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6">
-                                    Apply Now
+                                <Button
+                                    className={`flex-1 rounded-full py-6 text-base font-medium transition-all hover:scale-[1.02] ${appliedIds.has(selectedSaved.opportunityId)
+                                        ? "bg-green-500 hover:bg-green-600 text-white cursor-default"
+                                        : "bg-sky-600 hover:bg-sky-700 text-white"}`}
+                                    onClick={() => handleApplyFromSaved(selectedSaved)}
+                                    disabled={actionLoading === `apply-${selectedSaved.opportunityId}` || appliedIds.has(selectedSaved.opportunityId)}
+                                >
+                                    {actionLoading === `apply-${selectedSaved.opportunityId}` ? (
+                                        "Applying..."
+                                    ) : appliedIds.has(selectedSaved.opportunityId) ? (
+                                        <><CheckCircle2 className="w-4 h-4 mr-1" />Applied</>
+                                    ) : (
+                                        <><Zap className="w-4 h-4 mr-1" />Apply Now</>
+                                    )}
                                 </Button>
                                 <Button
                                     variant="outline"
-                                    className="px-6 rounded-full py-6 border-slate-300 text-slate-700 hover:bg-slate-100"
-                                    onClick={() => setSelectedSaved(null)}
+                                    className="px-6 rounded-full py-6 border-amber-300 text-amber-700 hover:bg-amber-50"
+                                    onClick={() => handleUnsave(selectedSaved)}
+                                    disabled={actionLoading === `unsave-${selectedSaved.opportunityId}`}
                                 >
-                                    Close
+                                    {actionLoading === `unsave-${selectedSaved.opportunityId}` ? "Removing..." : "Unsave"}
                                 </Button>
                             </div>
                         </div>

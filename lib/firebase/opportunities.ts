@@ -86,6 +86,7 @@ export async function getOpportunities(
         skills: data.skills || [],
         featured: data.featured || false,
         image: data.image || "/icon.svg",
+        orgId: data.orgId || '',
       } as Opportunity);
     });
 
@@ -137,6 +138,7 @@ export async function getAllOpportunities(): Promise<Opportunity[]> {
         skills: data.skills || [],
         featured: data.featured || false,
         image: data.image || "/icon.svg",
+        orgId: data.orgId || '',
       } as Opportunity);
     });
 

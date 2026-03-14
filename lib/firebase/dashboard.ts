@@ -69,6 +69,8 @@ export interface SavedOpportunity {
     hours: number;
     category: string;
     image: string;
+    orgId: string;
+    dateISO: string;
     // Extra fields for detail popups
     description?: string;
     skills?: string[];
@@ -131,6 +133,8 @@ export async function toggleSaveOpportunity(userId: string, opportunity: Opportu
                 hours: opportunity.hours,
                 category: opportunity.category,
                 image: opportunity.image,
+                orgId: opportunity.orgId,
+                dateISO: opportunity.dateISO,
                 description: opportunity.description,
                 skills: opportunity.skills,
                 commitment: opportunity.commitment,
@@ -145,6 +149,14 @@ export async function toggleSaveOpportunity(userId: string, opportunity: Opportu
         console.error("Error toggling saved opportunity:", error);
         throw error;
     }
+}
+
+/**
+ * Remove a saved opportunity
+ */
+export async function unsaveOpportunity(userId: string, opportunityId: string): Promise<void> {
+    const savedDocRef = doc(db, "user_saved_opportunities", `${userId}_${opportunityId}`);
+    await deleteDoc(savedDocRef);
 }
 
 /**

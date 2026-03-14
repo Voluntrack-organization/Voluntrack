@@ -101,7 +101,7 @@ service cloud.firestore {
     // Users manage only their own saved docs.
     match /user_saved_opportunities/{savedId} {
       allow read: if isAuthenticated()
-        && resource.data.userId == request.auth.uid;
+        && (resource == null || resource.data.userId == request.auth.uid);
       allow create: if isAuthenticated()
         && request.resource.data.userId == request.auth.uid;
       allow delete: if isAuthenticated()

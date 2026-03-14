@@ -48,6 +48,7 @@ import {
   Plus,
   SlidersHorizontal,
   CheckCircle2,
+  Bookmark,
 } from "lucide-react"
 import { CATEGORIES, INTERESTS } from "@/lib/preferences"
 import { getAllOpportunities, type Opportunity } from "@/lib/firebase/opportunities"
@@ -418,9 +419,16 @@ export default function OpportunitiesPage() {
           )}
 
           {/* Spots indicator */}
-          <div className="absolute top-3 right-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm">
+          <div className={`absolute top-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm ${savedIds.has(opportunity.id) ? 'right-12' : 'right-3'}`}>
             {opportunity.spotsLeft} spots left
           </div>
+
+          {/* Saved bookmark badge */}
+          {savedIds.has(opportunity.id) && (
+            <div className="absolute top-3 right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg z-10">
+              <Bookmark className="w-4 h-4 text-white fill-current" />
+            </div>
+          )}
 
           {/* Content */}
           <div className="absolute inset-0 p-4 flex flex-col justify-end">
@@ -892,9 +900,14 @@ export default function OpportunitiesPage() {
                           Featured
                         </div>
                       )}
-                      <div className="absolute top-3 right-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm">
+                      <div className={`absolute top-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm ${savedIds.has(opp.id) ? 'right-12' : 'right-3'}`}>
                         {opp.spotsLeft} spots left
                       </div>
+                      {savedIds.has(opp.id) && (
+                        <div className="absolute top-3 right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg z-10">
+                          <Bookmark className="w-4 h-4 text-white fill-current" />
+                        </div>
+                      )}
                       <div className="absolute inset-0 p-4 flex flex-col justify-end">
                         <h3 className="font-bold text-white text-lg leading-tight mb-1 drop-shadow-lg">
                           {opp.title}
@@ -962,9 +975,14 @@ export default function OpportunitiesPage() {
                               Featured
                             </div>
                           )}
-                          <div className="absolute top-3 right-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm">
+                          <div className={`absolute top-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm ${savedIds.has(opp.id) ? 'right-12' : 'right-3'}`}>
                             {opp.spotsLeft} spots left
                           </div>
+                          {savedIds.has(opp.id) && (
+                            <div className="absolute top-3 right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg z-10">
+                              <Bookmark className="w-4 h-4 text-white fill-current" />
+                            </div>
+                          )}
                           <div className="absolute inset-0 p-4 flex flex-col justify-end">
                             <h3 className="font-bold text-white text-lg leading-tight mb-1 drop-shadow-lg">
                               {opp.title}
@@ -1033,9 +1051,14 @@ export default function OpportunitiesPage() {
                               Featured
                             </div>
                           )}
-                          <div className="absolute top-3 right-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm">
+                          <div className={`absolute top-3 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-slate-700 text-xs font-medium shadow-sm ${savedIds.has(opp.id) ? 'right-12' : 'right-3'}`}>
                             {opp.spotsLeft} spots left
                           </div>
+                          {savedIds.has(opp.id) && (
+                            <div className="absolute top-3 right-3 w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center shadow-lg z-10">
+                              <Bookmark className="w-4 h-4 text-white fill-current" />
+                            </div>
+                          )}
                           <div className="absolute inset-0 p-4 flex flex-col justify-end">
                             <h3 className="font-bold text-white text-lg leading-tight mb-1 drop-shadow-lg">
                               {opp.title}
