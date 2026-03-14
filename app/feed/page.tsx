@@ -44,7 +44,7 @@ export default function FeedPage() {
       <main className="pt-24 pb-16">
         <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <div className="mb-8">
-            <h1 className="font-serif text-3xl md:text-4xl font-light text-foreground mb-1">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-1 tracking-tight">
               Feed
             </h1>
             <p className="text-muted-foreground">

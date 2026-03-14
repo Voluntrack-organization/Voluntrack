@@ -13,11 +13,11 @@ export default function RoleSelectionPage() {
 
           {/* Hero Section */}
           <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
               Welcome to{" "}
-              <span className="font-serif font-normal text-primary">Volun</span>
-              <span className="font-serif font-normal text-orange-500">Track</span>
-              <span className="font-serif font-normal text-primary"> Ontario</span>
+              <span className="text-primary">Volun</span>
+              <span className="text-orange-500">Track</span>
+              <span className="text-primary"> Ontario</span>
             </h1>
             <p className="text-lg text-muted-foreground">
               Select your role below to get started.
@@ -38,7 +38,7 @@ export default function RoleSelectionPage() {
                   />
                 </div>
                 <CardContent className="p-8 pb-4 flex-grow bg-white relative z-20 group-hover:bg-sky-50/30 transition-colors">
-                  <h2 className="text-2xl font-serif text-sky-900 mb-3 group-hover:text-sky-700 transition-colors">Students</h2>
+                  <h2 className="text-2xl font-bold text-sky-900 mb-3 group-hover:text-primary transition-colors tracking-tight">Students</h2>
                   <p className="text-muted-foreground leading-relaxed text-sm">
                     Discover opportunities, track your hours, and build skills for your future
                   </p>
@@ -63,7 +63,7 @@ export default function RoleSelectionPage() {
                   />
                 </div>
                 <CardContent className="p-8 pb-4 flex-grow bg-white relative z-20 group-hover:bg-sky-50/30 transition-colors">
-                  <h2 className="text-2xl font-serif text-sky-900 mb-3 group-hover:text-sky-700 transition-colors">Volunteer Organizations</h2>
+                  <h2 className="text-2xl font-bold text-sky-900 mb-3 group-hover:text-primary transition-colors tracking-tight">Volunteer Organizations</h2>
                   <p className="text-muted-foreground leading-relaxed text-sm">
                     Post opportunities, connect with eager volunteers, and verify completed hours
                   </p>

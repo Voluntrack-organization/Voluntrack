@@ -11,10 +11,10 @@ export default function SignupPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-sky-900 leading-tight">
                             Welcome to
                         </h1>
-                        <h2 className="text-4xl md:text-5xl font-bold font-serif">
-                            <span className="font-serif font-normal text-primary">Volun</span>
-                            <span className="font-serif font-normal text-orange-500">Track</span>
-                            <span className="font-serif font-normal text-primary"> Ontario</span>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+                            <span className="text-primary">Volun</span>
+                            <span className="text-orange-500">Track</span>
+                            <span className="text-primary"> Ontario</span>
                         </h2>
                         <p className="mt-4 text-lg text-sky-800 font-medium">
                             Find Opportunities. Track hours. Make an impact

@@ -99,7 +99,7 @@ export function AddExternalOpportunityModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto rounded-2xl border-slate-200 shadow-xl">
+      <DialogContent className="sm:max-w-[500px] max-h-[85vh] overflow-y-auto rounded-2xl border-slate-200 shadow-xl fixed top-[110px] sm:top-[120px] translate-y-0">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-slate-800">Add External Opportunity</DialogTitle>
           <DialogDescription>

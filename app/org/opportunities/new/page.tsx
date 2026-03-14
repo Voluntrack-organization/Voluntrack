@@ -169,7 +169,7 @@ export default function PostOpportunityPage() {
                         <ArrowLeft className="w-4 h-4" />
                         {searchParams.get("from") === "dashboard" ? "Back to Dashboard" : "Back to Manage Postings"}
                     </Link>
-                    <h1 className="text-2xl md:text-3xl font-bold text-white">
+                    <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                         Post an Opportunity
                     </h1>
                     <p className="text-sky-100 mt-0.5 text-sm">
@@ -185,7 +185,7 @@ export default function PostOpportunityPage() {
                     <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
                         {/* Card Header */}
                         <div className="bg-gradient-to-r from-sky-50 to-indigo-50 px-6 py-4 border-b border-sky-100">
-                            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 tracking-tight">
                                 <Building2 className="w-5 h-5 text-sky-600" />
                                 Organization Information
                             </h2>
@@ -395,7 +395,7 @@ export default function PostOpportunityPage() {
 
                                 {/* Divider */}
                                 <div className="border-t border-slate-100 pt-6">
-                                    <h3 className="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                                    <h3 className="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2 tracking-tight">
                                         <User className="w-4 h-4 text-sky-600" />
                                         Contact Information
                                     </h3>

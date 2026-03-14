@@ -8,10 +8,10 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href="/" className="inline-block mb-4">
-              <span className="font-serif text-2xl font-light tracking-wide">
-                <span className="font-serif font-normal text-primary">Volun</span>
-                <span className="font-serif font-normal text-orange-500">Track</span>
-                <span className="font-serif font-normal text-primary"> Ontario</span>
+              <span className="font-logo text-2xl font-bold tracking-tight">
+                <span className="text-primary">Volun</span>
+                <span className="text-orange-500">Track</span>
+                <span className="text-primary"> Ontario</span>
               </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
@@ -51,9 +51,9 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()}{" "}
-            <span className="font-serif font-normal text-primary">Volun</span>
-            <span className="font-serif font-normal text-orange-500">Track</span>{" "}
-            <span className="font-serif font-normal text-primary">Ontario</span>. All rights reserved.
+            <span className="font-logo font-bold text-primary">Volun</span>
+            <span className="font-logo font-bold text-orange-500">Track</span>{" "}
+            <span className="font-logo font-bold text-primary">Ontario</span>. All rights reserved.
           </p>
           <div className="flex gap-6">
             <Link href="/privacy" className="text-xs text-muted-foreground hover:text-foreground transition-colors">

@@ -312,7 +312,7 @@ export default function OrgOpportunitiesPage() {
 
           {/* Content */}
           <div className="absolute inset-0 p-4 flex flex-col justify-end">
-            <h3 className="font-bold text-white text-base leading-tight mb-1 drop-shadow-lg">
+            <h3 className="font-bold text-white text-base leading-tight mb-1 drop-shadow-lg tracking-tight">
               {opportunity.title}
             </h3>
             <p className="text-white/90 text-sm mb-2 drop-shadow">{opportunity.organization}</p>
@@ -395,7 +395,7 @@ export default function OrgOpportunitiesPage() {
 
     return (
       <div className="mb-10 group/row">
-        <h2 className={`text-xl font-bold ${titleColor} mb-4 px-2`}>{title}</h2>
+        <h2 className={`text-xl font-bold ${titleColor} mb-4 px-2 tracking-tight`}>{title}</h2>
 
         <div className="relative">
           {/* Left scroll */}
@@ -449,7 +449,7 @@ export default function OrgOpportunitiesPage() {
               Back to Dashboard
             </Link>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white">
+              <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                 Manage Postings
               </h1>
               <p className="text-sky-100 mt-0.5 text-sm">
@@ -517,7 +517,7 @@ export default function OrgOpportunitiesPage() {
             <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
               <div className="bg-gradient-to-r from-sky-50 to-indigo-50 px-6 py-4 border-b border-sky-100">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-bold text-slate-900">Organization Postings</h2>
+                  <h2 className="text-lg font-bold text-slate-900 tracking-tight">Organization Postings</h2>
                   <span className="text-sm font-medium text-slate-600 bg-white px-3 py-1 rounded-full border border-slate-200">
                     # of Postings: <span className="font-bold text-sky-700">{filteredManagePostings.length}</span>
                   </span>
@@ -560,7 +560,7 @@ export default function OrgOpportunitiesPage() {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-3">
                                 <div>
-                                  <h3 className="text-lg font-bold text-slate-900">{posting.organization}</h3>
+                                  <h3 className="text-lg font-bold text-slate-900 tracking-tight">{posting.organization}</h3>
                                   <p className="text-sm text-slate-600 mt-0.5">Title: {posting.title}</p>
                                 </div>
                                 <div className={`flex items-center gap-2 ${spotsColors} border px-3 py-1.5 rounded-lg flex-shrink-0`}>
@@ -792,7 +792,7 @@ export default function OrgOpportunitiesPage() {
 
           {/* Simplified List View */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <h2 className="text-xl font-bold text-slate-800 mb-6">
+            <h2 className="text-xl font-bold text-slate-800 mb-6 tracking-tight">
               All Opportunities {hasActiveFilters && `(${filteredOpportunities.length})`}
             </h2>
             <div className="space-y-3">

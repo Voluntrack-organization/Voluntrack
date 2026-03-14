@@ -166,7 +166,7 @@ export default function AccountPage() {
                                         <Sparkles className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
-                                        <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                                        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
                                             Welcome back, {loading ? "..." : (userProfile?.firstName || "User")}!
                                         </h1>
                                         <p className="text-muted-foreground mt-1">Ready to make a difference today?</p>
@@ -226,7 +226,7 @@ export default function AccountPage() {
 
                     {/* Page Title */}
                     <div className="mb-6">
-                        <h2 className="text-2xl font-bold text-foreground">My Account</h2>
+                        <h2 className="text-2xl font-bold text-foreground tracking-tight">My Account</h2>
                         <p className="text-muted-foreground mt-1">
                             View and manage your personal information
                         </p>
@@ -241,7 +241,7 @@ export default function AccountPage() {
                                         <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
                                             <User className="w-5 h-5 text-blue-600" />
                                         </div>
-                                        <h3 className="text-lg font-semibold">Your information</h3>
+                                        <h3 className="text-lg font-bold tracking-tight">Your information</h3>
                                     </div>
                                     {isEditing ? (
                                         <div className="flex items-center gap-2">
@@ -356,7 +356,7 @@ export default function AccountPage() {
                                         <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center">
                                             <Settings className="w-5 h-5 text-sky-600" />
                                         </div>
-                                        <h3 className="text-lg font-semibold">Your preferences</h3>
+                                        <h3 className="text-lg font-bold tracking-tight">Your preferences</h3>
                                     </div>
                                     {isEditingPrefs ? (
                                         <div className="flex items-center gap-2">
@@ -412,7 +412,7 @@ export default function AccountPage() {
                                 <div className="grid md:grid-cols-2 gap-8">
                                     {/* Interests */}
                                     <div>
-                                        <Label className="text-base font-semibold mb-4 block">
+                                        <Label className="text-base font-bold mb-4 block tracking-tight">
                                             What are you most interested in? (pick 1-2)
                                         </Label>
                                         {!isEditingPrefs ? (
@@ -463,7 +463,7 @@ export default function AccountPage() {
                                     {/* Volunteer preference & Availability */}
                                     <div className="space-y-6">
                                         <div>
-                                            <Label className="text-base font-semibold mb-4 block">
+                                            <Label className="text-base font-bold mb-4 block tracking-tight">
                                                 How do you prefer to Volunteer?
                                             </Label>
                                             {isEditingPrefs ? (
@@ -492,7 +492,7 @@ export default function AccountPage() {
                                             )}
                                         </div>
                                         <div>
-                                            <Label className="text-base font-semibold mb-4 block">
+                                            <Label className="text-base font-bold mb-4 block tracking-tight">
                                                 When are you available?
                                             </Label>
                                             {isEditingPrefs ? (

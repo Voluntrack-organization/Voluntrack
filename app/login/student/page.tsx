@@ -1,8 +1,11 @@
 import { LoginForm } from "@/components/login-form"
+import { Navigation } from "@/components/navigation"
 
 export default function StudentLoginPage() {
     return (
-        <div className="min-h-svh bg-background p-6 md:p-10">
+        <div className="min-h-svh bg-background flex flex-col">
+            <Navigation />
+            <div className="flex-1 p-6 md:p-10 pt-24 md:pt-32">
             <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
 
                 {/* LEFT COLUMN */}
@@ -11,10 +14,10 @@ export default function StudentLoginPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-sky-900 leading-tight">
                             Welcome to
                         </h1>
-                        <h2 className="text-4xl md:text-5xl font-bold font-serif">
-                            <span className="font-serif font-normal text-primary">Volun</span>
-                            <span className="font-serif font-normal text-orange-500">Track</span>
-                            <span className="font-serif font-normal text-primary"> Ontario</span>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+                            <span className="text-primary">Volun</span>
+                            <span className="text-orange-500">Track</span>
+                            <span className="text-primary"> Ontario</span>
                         </h2>
                         <p className="mt-4 text-lg text-sky-800 font-medium">
                             Find Opportunities. Track hours. Make an impact
@@ -52,6 +55,7 @@ export default function StudentLoginPage() {
                     </div>
                 </div>
 
+                </div>
             </div>
         </div>
     )

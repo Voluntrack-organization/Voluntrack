@@ -44,6 +44,8 @@ import {
 import {
     getUserApplications,
     getUserSaved,
+    toggleSaveOpportunity,
+    applyToOpportunity,
     updateApplicationStatus,
     unsaveOpportunity,
     applyToOpportunity,
@@ -97,7 +99,7 @@ export default function ApplicationsPage() {
     const [actionLoading, setActionLoading] = useState<string | null>(null)
     const [dataLoading, setDataLoading] = useState(true)
     const [selectedApplication, setSelectedApplication] = useState<UserApplication | null>(null)
-    const [selectedSaved, setSelectedSaved] = useState<SavedOpportunity | null>(null)
+    const [selectedSaved, setSelectedSaved] = useState<UserApplication | null>(null)
     const [reflectionText, setReflectionText] = useState("")
     const [reportOpportunity, setReportOpportunity] = useState<UserApplication | null>(null)
     const [reportConcern, setReportConcern] = useState("")
@@ -138,6 +140,41 @@ export default function ApplicationsPage() {
             fetchData() // Refresh data
         } catch (error) {
             toast.error("Failed to update status.")
+        }
+    }
+
+    const handleUnsave = async (opp: UserApplication) => {
+        if (!user?.uid) return
+        try {
+            // Reconstruct minimal Opportunity object for toggleSaveOpportunity
+            const oppData = { ...opp, id: opp.opportunityId } as any
+            const stillSaved = await toggleSaveOpportunity(user.uid, oppData)
+            if (!stillSaved) {
+                setSavedOpps(prev => prev.filter(o => o.opportunityId !== opp.opportunityId))
+                if (selectedSaved?.opportunityId === opp.opportunityId) {
+                    setSelectedSaved(null)
+                }
+                toast.success("Removed from saved list")
+            }
+        } catch (error: any) {
+            toast.error(error.message || "Failed to update saved list.")
+        }
+    }
+
+    const handleApplyFromSaved = async (opp: UserApplication) => {
+        if (!user?.uid) {
+            toast.error("Please sign in to apply.")
+            return
+        }
+        try {
+            // Reconstruct minimal Opportunity object
+            const oppData = { ...opp, id: opp.opportunityId } as any
+            await applyToOpportunity(user.uid, oppData)
+            toast.success("Application submitted successfully!")
+            setSelectedSaved(null)
+            fetchData() // Refresh both lists
+        } catch (err: any) {
+            toast.error(err.message || "Failed to apply.")
         }
     }
 
@@ -274,7 +311,7 @@ export default function ApplicationsPage() {
             <div className="flex items-center justify-between sticky top-0 bg-card py-2 z-10">
                 <div className="flex items-center gap-2">
                     <Filter className="w-5 h-5 text-foreground" />
-                    <h2 className="font-semibold text-lg">Filter</h2>
+                    <h2 className="font-bold text-lg tracking-tight">Filter</h2>
                 </div>
             </div>
 
@@ -347,7 +384,7 @@ export default function ApplicationsPage() {
 
             {/* Sorting */}
             <div>
-                <h3 className="font-medium text-sm mb-3 flex items-center gap-2">
+                <h3 className="font-bold text-sm mb-3 flex items-center gap-2 tracking-tight">
                     <ArrowUpDown className="w-4 h-4" />
                     Sort By
                 </h3>
@@ -371,7 +408,7 @@ export default function ApplicationsPage() {
 
             {/* Status Filter */}
             <div>
-                <h3 className="font-medium text-sm mb-3">Application Status</h3>
+                <h3 className="font-bold text-sm mb-3 tracking-tight">Application Status</h3>
                 <div className="space-y-2">
                     {statusOptions.map((status) => (
                         <label key={status.id} className="flex items-center gap-2 cursor-pointer">
@@ -392,7 +429,7 @@ export default function ApplicationsPage() {
 
             {/* Category Filter */}
             <div>
-                <h3 className="font-medium text-sm mb-3">Category</h3>
+                <h3 className="font-bold text-sm mb-3 tracking-tight">Category</h3>
                 <div className="space-y-2">
                     {displayedCategories.map((category) => {
                         const colors = categoryColors[category] || { bg: "bg-gray-100", text: "text-gray-700", border: "border-gray-300" }
@@ -431,7 +468,7 @@ export default function ApplicationsPage() {
 
             {/* Date Range */}
             <div>
-                <h3 className="font-medium text-sm mb-3">Applied Date Range</h3>
+                <h3 className="font-bold text-sm mb-3 tracking-tight">Applied Date Range</h3>
                 <div className="space-y-3">
                     <div>
                         <label className="text-xs text-muted-foreground mb-1 block">Start Date</label>
@@ -472,7 +509,7 @@ export default function ApplicationsPage() {
                                         <Sparkles className="w-6 h-6 text-white" />
                                     </div>
                                     <div>
-                                        <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                                        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
                                             Welcome back,{" "}
                                             {loading
                                                 ? "..."
@@ -552,7 +589,7 @@ export default function ApplicationsPage() {
                     {/* Page Title & Actions */}
                     <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h2 className="text-2xl font-bold text-foreground">My Applications</h2>
+                            <h2 className="text-2xl font-bold text-foreground tracking-tight">My Applications</h2>
                             <p className="text-muted-foreground mt-1">
                                 Track all your volunteer applications and their status
                             </p>
@@ -648,7 +685,7 @@ export default function ApplicationsPage() {
                                             onClick={() => setSelectedApplication(app)}
                                         >
                                             <div className="flex-1">
-                                                <h3 className="font-semibold text-foreground mb-2">{app.title}</h3>
+                                                <h3 className="font-bold text-foreground mb-2 tracking-tight">{app.title}</h3>
                                                 <div className="space-y-1 text-sm">
                                                     <p className="flex items-center gap-2">
                                                         <span className="text-red-500 font-medium">Location</span>
@@ -758,7 +795,7 @@ export default function ApplicationsPage() {
                                             <div
                                                 key={opp.opportunityId}
                                                 onClick={() => setSelectedSaved(opp)}
-                                                className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-all cursor-pointer hover:scale-[1.02]"
+                                                className="group flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-all cursor-pointer hover:scale-[1.02]"
                                             >
                                                 <div className={`w-8 h-8 rounded-lg ${categoryColors[opp.category]?.bg || "bg-amber-100"} flex items-center justify-center flex-shrink-0`}>
                                                     <Bookmark className={`w-4 h-4 ${categoryColors[opp.category]?.text || "text-amber-600"}`} />
@@ -772,6 +809,13 @@ export default function ApplicationsPage() {
                                                         {opp.date}
                                                     </p>
                                                 </div>
+                                                <button
+                                                    onClick={(e) => { e.stopPropagation(); handleUnsave(opp); }}
+                                                    className="opacity-0 group-hover:opacity-100 p-1 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all ml-auto"
+                                                    title="Remove from saved"
+                                                >
+                                                    <X className="w-4 h-4" />
+                                                </button>
                                             </div>
                                         ))}
                                     </div>
@@ -1144,8 +1188,8 @@ export default function ApplicationsPage() {
                                         <Calendar className="w-5 h-5 text-sky-600" />
                                     </div>
                                     <div>
-                                        <p className="font-medium text-slate-800">{(selectedSaved.fullDate || selectedSaved.date || "").split(',').slice(0, 2).join(',')}</p>
-                                        <p className="text-sm">{(selectedSaved.fullDate || selectedSaved.date || "").split(',').slice(2).join(',').trim()}</p>
+                                        <p className="font-medium text-slate-800">{(selectedSaved.date || "").split(',').slice(0, 2).join(',')}</p>
+                                        <p className="text-sm">{(selectedSaved.date || "").split(',').slice(2).join(',').trim()}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3 text-slate-600">

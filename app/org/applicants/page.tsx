@@ -105,7 +105,7 @@ export default function ApplicantsPage() {
                     </Link>
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white">
+                            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
                                 View Applicants
                             </h1>
                             <p className="text-sky-100 mt-0.5 text-sm">
@@ -174,7 +174,7 @@ export default function ApplicantsPage() {
                     <Card className="bg-white border-0 shadow-lg rounded-2xl overflow-hidden">
                         <div className="bg-gradient-to-r from-sky-500 to-indigo-600 px-6 py-4">
                             <div className="flex items-center justify-between">
-                                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                                <h2 className="text-lg font-bold text-white flex items-center gap-2 tracking-tight">
                                     <Users className="w-5 h-5" />
                                     Applications
                                 </h2>
@@ -212,7 +212,7 @@ export default function ApplicantsPage() {
                                                         </div>
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex items-center gap-2 mb-0.5">
-                                                                <h3 className="font-semibold text-slate-900">{applicant.userName}</h3>
+                                                                <h3 className="font-bold text-slate-900 tracking-tight">{applicant.userName}</h3>
                                                                 <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${status.bg} ${status.text} border ${status.border}`}>
                                                                     <StatusIcon className="w-3 h-3" />
                                                                     {status.label}
@@ -294,7 +294,7 @@ export default function ApplicantsPage() {
                                         {selectedApplicant.userName.split(" ").map((n: string) => n[0]).join("")}
                                     </div>
                                     <div>
-                                        <h2 className="text-lg font-bold text-slate-900">{selectedApplicant.userName}</h2>
+                                        <h2 className="text-lg font-bold text-slate-900 tracking-tight">{selectedApplicant.userName}</h2>
                                         <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${status.bg} ${status.text} border ${status.border}`}>
                                             <StatusIcon className="w-3 h-3" />
                                             {status.label}
@@ -314,7 +314,7 @@ export default function ApplicantsPage() {
                                 {/* Applied For */}
                                 <div>
                                     <label className="text-xs font-medium text-slate-500 uppercase tracking-wide">Applied For</label>
-                                    <p className="text-sm font-semibold text-slate-900 mt-0.5">{selectedApplicant.title}</p>
+                                    <p className="text-sm font-bold text-slate-900 mt-0.5 tracking-tight">{selectedApplicant.title}</p>
                                     <span className="text-xs text-slate-500">{selectedApplicant.category}</span>
                                 </div>
 

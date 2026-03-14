@@ -9,6 +9,7 @@ import {
   Clock3,
   CheckCircle2,
   XCircle,
+  Star,
 } from "lucide-react"
 
 // ============================================================================
@@ -59,4 +60,5 @@ export const statusColors: { [key: string]: { bg: string; text: string; border: 
   completed: { bg: "bg-teal-100", text: "text-teal-700", border: "border-teal-300", icon: CheckCircle2, label: "Completed" },
   denied: { bg: "bg-red-100", text: "text-red-700", border: "border-red-300", icon: XCircle, label: "Declined" },
   rejected: { bg: "bg-red-100", text: "text-red-700", border: "border-red-300", icon: XCircle, label: "Declined" }, // alias
+  saved: { bg: "bg-amber-100", text: "text-amber-700", border: "border-amber-300", icon: Star, label: "Saved" },
 }

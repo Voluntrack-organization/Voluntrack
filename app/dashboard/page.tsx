@@ -46,9 +46,9 @@ import {
 import {
   getUserApplications,
   getUserSaved,
+  toggleSaveOpportunity,
   updateApplicationStatus,
-  UserApplication,
-  SavedOpportunity
+  UserApplication
 } from "@/lib/firebase/dashboard"
 import { submitReport } from "@/lib/firebase/reports"
 import { toast } from "sonner"
@@ -120,6 +120,13 @@ const badges = [
     color: "bg-indigo-500",
   },
   {
+    id: "active-applicant",
+    name: "Active Applicant",
+    description: "Apply to 5 opportunities",
+    icon: FileText,
+    color: "bg-cyan-500",
+  },
+  {
     id: "explorer",
     name: "Explorer",
     description: "Try 3 different categories",
@@ -137,10 +144,10 @@ export default function DashboardPage() {
   const [scrollLeft, setScrollLeft] = useState(0)
   const badgesRef = useRef<HTMLDivElement>(null)
   const [applications, setApplications] = useState<UserApplication[]>([])
-  const [savedOpps, setSavedOpps] = useState<SavedOpportunity[]>([])
+  const [savedOpps, setSavedOpps] = useState<UserApplication[]>([])
   const [dataLoading, setDataLoading] = useState(true)
   const [selectedApplication, setSelectedApplication] = useState<UserApplication | null>(null)
-  const [selectedSaved, setSelectedSaved] = useState<SavedOpportunity | null>(null)
+  const [selectedSaved, setSelectedSaved] = useState<UserApplication | null>(null)
   const [reflectionText, setReflectionText] = useState("")
   const [reportOpportunity, setReportOpportunity] = useState<UserApplication | null>(null)
   const [reportConcern, setReportConcern] = useState("")
@@ -183,6 +190,24 @@ export default function DashboardPage() {
       fetchData() // Refresh data
     } catch (error) {
       toast.error("Failed to update status.")
+    }
+  }
+
+  const handleUnsave = async (opp: UserApplication) => {
+    if (!user?.uid) return
+    try {
+      // Reconstruct minimal Opportunity object for toggleSaveOpportunity
+      const oppData = { ...opp, id: opp.opportunityId } as any
+      const stillSaved = await toggleSaveOpportunity(user.uid, oppData)
+      if (!stillSaved) {
+        setSavedOpps(prev => prev.filter(o => o.opportunityId !== opp.opportunityId))
+        if (selectedSaved?.opportunityId === opp.opportunityId) {
+          setSelectedSaved(null)
+        }
+        toast.success("Removed from saved list")
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update saved list.")
     }
   }
 
@@ -273,7 +298,7 @@ export default function DashboardPage() {
                     <Sparkles className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">
+                    <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
                       Welcome back,{" "}
                       {authLoading ? (
                         "..."
@@ -432,7 +457,7 @@ export default function DashboardPage() {
 
                 {/* Upcoming Shifts section below the calendar */}
                 <div className="mt-4 pt-4 border-t">
-                  <h3 className="font-semibold text-sm mb-3">Upcoming Shifts</h3>
+                  <h3 className="font-bold text-sm mb-3 tracking-tight">Upcoming Shifts</h3>
                   <ul className="space-y-3">
                     {upcomingShifts.length > 0 ? (
                       upcomingShifts.map((app) => (
@@ -473,7 +498,7 @@ export default function DashboardPage() {
                       <Trophy className="w-4 h-4 text-yellow-600" />
                     </div>
                     <div>
-                      <h2 className="text-base font-semibold">Your Badges</h2>
+                      <h2 className="text-base font-bold tracking-tight">Your Badges</h2>
                       <p className="text-xs text-muted-foreground">Achievements you've earned</p>
                     </div>
                     <div className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
@@ -532,7 +557,7 @@ export default function DashboardPage() {
                         <FolderOpen className="w-4 h-4 text-blue-600" />
                       </div>
                       <div>
-                        <h2 className="text-base font-semibold">Recent Applications</h2>
+                        <h2 className="text-base font-bold tracking-tight">Recent Applications</h2>
                         <p className="text-xs text-muted-foreground">Your latest volunteer applications</p>
                       </div>
                     </div>
@@ -639,7 +664,7 @@ export default function DashboardPage() {
                           <CheckCircle2 className="w-4 h-4 text-teal-600" />
                         </div>
                         <div>
-                          <h2 className="text-base font-semibold">Completed Opportunities</h2>
+                          <h2 className="text-base font-bold tracking-tight">Completed Opportunities</h2>
                           <p className="text-xs text-muted-foreground">Volunteer opportunities you've finished</p>
                         </div>
                       </div>
@@ -674,7 +699,7 @@ export default function DashboardPage() {
                               className={`border rounded-lg p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm hover:shadow transition-all duration-200 cursor-pointer ${categoryColors[app.category]?.cardBg || defaultCategoryColor.cardBg}`}
                             >
                               <div className="flex-1 min-w-0">
-                                <h3 className="font-medium text-foreground text-sm truncate">{app.title}</h3>
+                                <h3 className="font-bold text-foreground text-sm truncate tracking-tight">{app.title}</h3>
                                 <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1.5 flex-wrap">
                                   <MapPin className="w-3 h-3 shrink-0 text-red-500" />
                                   <span className="truncate">{app.location.split(",")[0]}</span>
@@ -732,24 +757,31 @@ export default function DashboardPage() {
                     <div className="w-8 h-8 rounded-lg bg-pink-100 flex items-center justify-center">
                       <Heart className="w-4 h-4 text-pink-600" />
                     </div>
-                    <h2 className="text-base font-semibold">Saved</h2>
+                    <h2 className="text-base font-bold tracking-tight">Saved</h2>
                   </div>
 
                   <div className="space-y-3">
                     {savedOpps.map((opp) => (
-                      <div
-                        key={opp.opportunityId}
-                        onClick={() => setSelectedSaved(opp)}
-                        className={`rounded-xl p-3 flex items-center gap-3 border shadow-sm cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-[1.02] ${categoryColors[opp.category]?.cardBg || defaultCategoryColor.cardBg}`}
-                      >
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${categoryColors[opp.category]?.bg || defaultCategoryColor.bg}`}>
-                          <Star className={`w-5 h-5 ${categoryColors[opp.category]?.text || defaultCategoryColor.text}`} />
+                        <div
+                          key={opp.opportunityId}
+                          onClick={() => setSelectedSaved(opp)}
+                          className={`group rounded-xl p-3 flex items-center gap-3 border shadow-sm cursor-pointer hover:shadow-md transition-all duration-200 hover:scale-[1.02] ${categoryColors[opp.category]?.cardBg || defaultCategoryColor.cardBg}`}
+                        >
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${categoryColors[opp.category]?.bg || defaultCategoryColor.bg}`}>
+                            <Star className={`w-5 h-5 ${categoryColors[opp.category]?.text || defaultCategoryColor.text}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-sm truncate">{opp.title}</p>
+                            <p className="text-xs text-muted-foreground">{opp.date}</p>
+                          </div>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleUnsave(opp); }}
+                            className="opacity-0 group-hover:opacity-100 p-1.5 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                            title="Remove from saved"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
                         </div>
-                        <div>
-                          <p className="font-medium text-sm">{opp.title}</p>
-                          <p className="text-xs text-muted-foreground">{opp.date}</p>
-                        </div>
-                      </div>
                     ))}
                   </div>
 
@@ -1105,8 +1137,8 @@ export default function DashboardPage() {
                       <Calendar className="w-5 h-5 text-sky-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-slate-800">{(selectedSaved.fullDate || selectedSaved.date).split(',').slice(0, 2).join(',')}</p>
-                      <p className="text-sm">{(selectedSaved.fullDate || selectedSaved.date).split(',').slice(2).join(',').trim() || "Time TBD"}</p>
+                      <p className="font-medium text-slate-800">{selectedSaved.date.split(',').slice(0, 2).join(',')}</p>
+                      <p className="text-sm">{selectedSaved.date.split(',').slice(2).join(',').trim() || "Time TBD"}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 text-slate-600">
@@ -1138,9 +1170,22 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-full py-6"
+                    onClick={() => {
+                      setSelectedApplication({ ...selectedSaved, status: 'pending' } as any);
+                      setSelectedSaved(null);
+                    }}
+                  >
                     Apply Now
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="flex-1 rounded-full py-6 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    onClick={() => handleUnsave(selectedSaved)}
+                  >
+                    Remove from Saved
                   </Button>
                   <Button
                     variant="outline"

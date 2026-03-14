@@ -102,7 +102,7 @@ export default function OrgDashboardPage() {
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="mb-8">
-                        <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
+                        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
                             Organization Dashboard
                         </h1>
                         <p className="text-slate-500 mt-1">
@@ -119,7 +119,7 @@ export default function OrgDashboardPage() {
                                         <Plus className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-white text-base">Post Opportunity</h3>
+                                        <h3 className="font-bold text-white text-base tracking-tight">Post Opportunity</h3>
                                         <p className="text-sky-100 text-sm mt-0.5">Create a new posting</p>
                                     </div>
                                 </CardContent>
@@ -132,7 +132,7 @@ export default function OrgDashboardPage() {
                                         <Eye className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-white text-base">Manage Postings</h3>
+                                        <h3 className="font-bold text-white text-base tracking-tight">Manage Postings</h3>
                                         <p className="text-purple-100 text-sm mt-0.5">View & edit your listings</p>
                                     </div>
                                 </CardContent>
@@ -145,7 +145,7 @@ export default function OrgDashboardPage() {
                                         <Users className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-white text-base">View Applicants</h3>
+                                        <h3 className="font-bold text-white text-base tracking-tight">View Applicants</h3>
                                         <p className="text-emerald-100 text-sm mt-0.5">Review applications</p>
                                     </div>
                                 </CardContent>
@@ -221,7 +221,7 @@ export default function OrgDashboardPage() {
                         {/* Category Breakdown */}
                         <Card className="lg:col-span-1 bg-white border-0 shadow-md">
                             <CardContent className="p-6">
-                                <h2 className="text-lg font-bold text-slate-900 mb-5">Postings by Category</h2>
+                                <h2 className="text-lg font-bold text-slate-900 mb-5 tracking-tight">Postings by Category</h2>
                                 <div className="space-y-4">
                                     {Object.entries(categoryBreakdown).map(([category, count]) => {
                                         const colors = categoryColors[category] || defaultCategoryColor
@@ -260,7 +260,7 @@ export default function OrgDashboardPage() {
                         <Card className="lg:col-span-2 bg-white border-0 shadow-md">
                             <CardContent className="p-6">
                                 <div className="flex items-center justify-between mb-5">
-                                    <h2 className="text-lg font-bold text-slate-900">Recent Postings</h2>
+                                    <h2 className="text-lg font-bold text-slate-900 tracking-tight">Recent Postings</h2>
                                     <Link
                                         href="/org/opportunities?view=manage"
                                         className="text-sm text-sky-600 hover:text-sky-700 font-medium flex items-center gap-1 transition-colors"
@@ -286,7 +286,7 @@ export default function OrgDashboardPage() {
                                                 <div className="flex-1 min-w-0">
                                                     <div className="flex items-start justify-between gap-2">
                                                         <div>
-                                                            <h3 className="font-semibold text-slate-900 text-sm">{posting.title}</h3>
+                                                            <h3 className="font-bold text-slate-900 text-sm tracking-tight">{posting.title}</h3>
                                                             <p className="text-xs text-slate-500 mt-0.5">{posting.organization}</p>
                                                         </div>
                                                         <div className="flex items-center gap-1.5 bg-white px-2.5 py-1 rounded-full border border-slate-200 flex-shrink-0">
@@ -342,7 +342,7 @@ export default function OrgDashboardPage() {
                                     )
                                 })()}
                                 <div>
-                                    <h2 className="text-lg font-bold text-slate-900">{selectedCategory}</h2>
+                                    <h2 className="text-lg font-bold text-slate-900 tracking-tight">{selectedCategory}</h2>
                                     <p className="text-sm text-slate-500">{categoryPostings.length} posting{categoryPostings.length !== 1 ? "s" : ""}</p>
                                 </div>
                             </div>
@@ -365,7 +365,7 @@ export default function OrgDashboardPage() {
                                         onClick={() => setSelectedCategory(null)}
                                         className="block p-4 rounded-xl bg-slate-50 hover:bg-sky-50 border border-slate-100 hover:border-sky-200 transition-all duration-200 cursor-pointer"
                                     >
-                                        <h3 className="font-semibold text-slate-900">{posting.title}</h3>
+                                        <h3 className="font-bold text-slate-900 tracking-tight">{posting.title}</h3>
                                         <p className="text-sm text-slate-500 mt-0.5">{posting.organization}</p>
                                         <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-slate-500">
                                             <span className="flex items-center gap-1">
