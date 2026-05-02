@@ -7,14 +7,26 @@ thumbnail to watch on YouTube.
 
 ### Student experience
 
-Browsing opportunities, applying, and tracking logged volunteer hours.
+Full walkthrough of the student-facing flow:
+
+- **Sign-up and onboarding**
+- The **Opportunities** page — browsing and discovering volunteer postings
+- The personal **Dashboard**
+- The activity **Feed**
+- **Applying** to volunteer opportunities
+- **Saving** opportunities to revisit later
+- **Reporting** and logging volunteer hours
 
 [![Voluntrack — student experience demo](https://img.youtube.com/vi/HeRixfa3pZo/maxresdefault.jpg)](https://www.youtube.com/watch?v=HeRixfa3pZo)
 
 ### Organization experience
 
-Posting opportunities, reviewing applicants, and managing volunteer
-contributions.
+Walks through every page and function on the organization side —
+opportunity creation, listing management, applicant review, and
+contribution tracking — then closes with an **end-to-end application
+demo**: the video flips between a student applying and the organization
+accepting in real time, confirming the Firestore backend wires both
+flows together live.
 
 [![Voluntrack — organization experience demo](https://img.youtube.com/vi/RQ8vXp6XdRo/maxresdefault.jpg)](https://www.youtube.com/watch?v=RQ8vXp6XdRo)
 
