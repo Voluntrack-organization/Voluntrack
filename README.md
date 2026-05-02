@@ -1,5 +1,25 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Demo videos
+
+End-to-end walkthrough of Voluntrack's two main user flows. Click either
+thumbnail to watch on YouTube.
+
+### Student experience
+
+Browsing opportunities, applying, and tracking logged volunteer hours.
+
+[![Voluntrack — student experience demo](https://img.youtube.com/vi/HeRixfa3pZo/maxresdefault.jpg)](https://www.youtube.com/watch?v=HeRixfa3pZo)
+
+### Organization experience
+
+Posting opportunities, reviewing applicants, and managing volunteer
+contributions.
+
+[![Voluntrack — organization experience demo](https://img.youtube.com/vi/RQ8vXp6XdRo/maxresdefault.jpg)](https://www.youtube.com/watch?v=RQ8vXp6XdRo)
+
+---
+
 ## Getting Started
 
 First, run the development server:
