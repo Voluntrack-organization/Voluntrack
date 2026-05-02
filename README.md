@@ -10,25 +10,25 @@ thumbnail to watch on YouTube.
 Full walkthrough of the student-facing flow:
 
 - **Sign-up and onboarding**
-- The **Opportunities** page — browsing and discovering volunteer postings
+- The **Opportunities** page: browsing and discovering volunteer postings
 - The personal **Dashboard**
 - The activity **Feed**
 - **Applying** to volunteer opportunities
 - **Saving** opportunities to revisit later
 - **Reporting** and logging volunteer hours
 
-[![Voluntrack — student experience demo](https://img.youtube.com/vi/HeRixfa3pZo/maxresdefault.jpg)](https://www.youtube.com/watch?v=HeRixfa3pZo)
+[![Voluntrack: student experience demo](https://img.youtube.com/vi/HeRixfa3pZo/maxresdefault.jpg)](https://www.youtube.com/watch?v=HeRixfa3pZo)
 
 ### Organization experience
 
-Walks through every page and function on the organization side —
-opportunity creation, listing management, applicant review, and
-contribution tracking — then closes with an **end-to-end application
+Walks through every page and function on the organization side
+(opportunity creation, listing management, applicant review, and
+contribution tracking), then closes with an **end-to-end application
 demo**: the video flips between a student applying and the organization
 accepting in real time, confirming the Firestore backend wires both
 flows together live.
 
-[![Voluntrack — organization experience demo](https://img.youtube.com/vi/RQ8vXp6XdRo/maxresdefault.jpg)](https://www.youtube.com/watch?v=RQ8vXp6XdRo)
+[![Voluntrack: organization experience demo](https://img.youtube.com/vi/RQ8vXp6XdRo/maxresdefault.jpg)](https://www.youtube.com/watch?v=RQ8vXp6XdRo)
 
 ---
 
@@ -42,7 +42,7 @@ npm run dev
 
 **Important:** Use `npm run dev` (not `npm dev run`). When the server starts, it will show a URL like:
 
-- **http://127.0.0.1:3000** — or **http://127.0.0.1:3001** / **3002** if port 3000 is already in use.
+- **http://127.0.0.1:3000**, or **http://127.0.0.1:3001** / **3002** if port 3000 is already in use.
 
 Open that exact URL in your browser. If the app doesn’t load, check the terminal for the correct port and use that.
 
