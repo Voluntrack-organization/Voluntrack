@@ -266,7 +266,9 @@ export default function PostOpportunityPage() {
             const check = await res.json()
             if (!check.valid) {
                 const message =
-                    check.flagType === "unsafe"
+                    check.flagType === "error"
+                        ? "Validation service is temporarily unavailable. Please try again later."
+                        : check.flagType === "unsafe"
                         ? "This opportunity contains inappropriate or harmful content and cannot be submitted."
                         : check.reason ?? "This opportunity does not appear to be eligible."
                 setContentWarning(message)
@@ -274,7 +276,9 @@ export default function PostOpportunityPage() {
                 return
             }
         } catch {
-            // Fail open — network error should not block submission
+            setContentWarning("Validation service is temporarily unavailable. Please try again later.")
+            setIsSubmitting(false)
+            return
         }
 
         // Layer 1.75: Ontario location validation

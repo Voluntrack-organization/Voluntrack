@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
 
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
-    console.error("[validate-opportunity] GEMINI_API_KEY not set — failing open")
-    return NextResponse.json({ valid: true })
+    console.error("[validate-opportunity] GEMINI_API_KEY not set — failing closed")
+    return NextResponse.json({ valid: false, flagType: "error", reason: "Validation service unavailable" }, { status: 503 })
   }
 
   try {
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
     const response = await Promise.race([
       genai.models.generateContent({
-        model: "gemini-2.0-flash",
+        model: "gemini-2.5-flash",
         contents: userContent,
       }),
       new Promise<never>((_, reject) =>
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       parsed = JSON.parse(cleaned)
     } catch {
       console.error("[validate-opportunity] Failed to parse Gemini response:", text)
-      return NextResponse.json({ valid: true })
+      return NextResponse.json({ valid: false, flagType: "error", reason: "Validation service unavailable" }, { status: 503 })
     }
 
     return NextResponse.json({
@@ -94,6 +94,6 @@ export async function POST(request: NextRequest) {
     })
   } catch (err) {
     console.error("[validate-opportunity] Gemini call failed:", err)
-    return NextResponse.json({ valid: true })
+    return NextResponse.json({ valid: false, flagType: "error", reason: "Validation service unavailable" }, { status: 503 })
   }
 }
